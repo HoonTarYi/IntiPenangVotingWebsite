@@ -1,0 +1,74 @@
+CREATE table users (
+    id int(11) not null PRIMARY KEY AUTO_INCREMENT,
+    uid  varchar(128) not null,
+    pwd  varchar(1000) not null,
+    cpwd  varchar(1000) not null,
+    email  varchar(128) not null,
+    addr  varchar(500) not null,
+	roles varchar(128) not null,
+    ip  varchar(128) not null,
+	country varchar(128) not null
+    )
+	
+	CREATE TABLE `polls` (
+	 `id` int(11) NOT NULL AUTO_INCREMENT,
+	 `subject` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+	 `start` datetime NOT NULL,
+	 `end` datetime NOT NULL,
+	 `poll_options` varchar(128) not null,
+	 PRIMARY KEY (`id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE `poll_options` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `poll_id` int(11) NOT NULL,
+ `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`),
+ KEY `poll_id` (`poll_id`),
+ CONSTRAINT `poll_options_ibfk_1` FOREIGN KEY (`poll_id`) REFERENCES `polls` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+// CHART SQL USED
+
+SELECT  poll_options.*, poll_votes.* FROM poll_options
+	  INNER JOIN poll_votes
+	  ON poll_options.id=poll_votes.poll_option_id
+	  
+
+
+$poll_views = false;
+
+if(isset($_POST['poll_views'])){
+$poll_views = $_POST['poll_views'];
+}			
+	
+
+<?php 
+echo "Today is " . date("Y-m-d") . "<br>";
+echo "The time is " . date("h:i:sa");
+
+include 'dbhpolls.php';
+
+$sql = 'SELECT end FROM polls';
+	$result = $conn->query($sql);
+	
+while ($row = $result->fetch_assoc()) {
+
+	$enddate=$row['end'];
+
+}
+
+if ($enddate < date("Y-m-d"). date("h:i:sa"))
+{
+	
+	header("Location: index.php");
+
+}
+
+else 
+{
+		print '<p>The Polls still can be vote.</p>';
+}
+?>	
+					
+
