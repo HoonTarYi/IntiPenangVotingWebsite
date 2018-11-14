@@ -27,7 +27,16 @@ require('Header.php');
 			  </h1>
        
 <br>
-      
+      <h3> <?php 
+				$url = "htttp://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+				
+				
+				if (strpos($url, 'error=uidpass') !== false) {
+					print "Username or Password is Incorrect!";
+					
+				}
+				
+				?></h3> 
 <form class="form-horizontal" action="signindb.php" method="POST">
     <div class="form-group">
     <label class="col-xs-2 control-label" for="inputSuccess" >Username</label>
@@ -73,30 +82,10 @@ require('Header.php');
 				
 				
 	
-				<!-- Footer -->
-					<footer id="footer">
-						<ul class="icons">
-							<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-							<li><a href="#" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
-						</ul>
-						<ul class="copyright">
-							<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
-					</footer>
+				<?php 
+require('Footer.php');
 
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+?>
         
 
 </body>

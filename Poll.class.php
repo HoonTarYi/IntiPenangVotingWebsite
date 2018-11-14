@@ -23,7 +23,13 @@ class Poll{
             }
         }
     }
-     private function getQuery($sql,$returnType = ''){
+    
+    /*
+     * Runs query to the database
+     * @param string SQL
+     * @param string count, single, all
+     */
+    private function getQuery($sql,$returnType = ''){
         $result = $this->db->query($sql);
         if($result){
             switch($returnType){
@@ -32,7 +38,13 @@ class Poll{
                     break;
                 case 'single':
                     $data = $result->fetch_assoc();
-                    break;
+					case 'done':
+                    if($result->num_rows > 0){
+                        while($row = $result->fetch_assoc()){
+                            $data[] = $row;
+                        }
+                    }
+                    
                 default:
                     if($result->num_rows > 0){
                         while($row = $result->fetch_assoc()){
@@ -42,38 +54,65 @@ class Poll{
             }
         }
         return !empty($data)?$data:false;
+
     }
-     /*
+    
+    /*
      * Get polls data
      * Returns single or multiple poll data with respective options
      * @param string single, all
      */
     public function getPolls($pollType = 'single'){
-			$poll_views = false;
-
-			if(isset($_POST['poll_views'])){
-			$poll_views = $_POST['poll_views'];
-			}	
         $pollData = array();
         $sql = "SELECT * FROM ".$this->pollTbl;
         $pollResult = $this->getQuery($sql, $pollType);
         if(!empty($pollResult)){
             if($pollType == 'single'){
                 $pollData['poll'] = $pollResult;
-                $sql2 = "SELECT * FROM ".$this->optTbl." WHERE poll_id = ".$poll_views;
+                $sql2 = "SELECT * FROM ".$this->optTbl." WHERE poll_id = ".$pollResult['id'];
                 $optionResult = $this->getQuery($sql2);
                 $pollData['options'] = $optionResult;
             }else{
                 $i = 0;
                 foreach($pollResult as $prow){
-                    $pollData[$i]['poll'] = $prow;
+                    $pollData['poll'] = $prow;
                     $sql2 = "SELECT * FROM ".$this->optTbl." WHERE poll_id = ".$prow['id'];
                     $optionResult = $this->getQuery($sql2);
-                    $pollData[$i]['options'] = $optionResult;
+                    $pollData['options'] = $optionResult;
                 }
             }
         }
         return !empty($pollData)?$pollData:false;
+    }
+	    /*
+     * Get polls data
+     * Returns single or multiple poll data with respective options
+     * @param string single, all
+     */
+    public function getPolls2($pollType = 'done'){
+		
+        $pollData2 = array();
+        $sql = "SELECT * FROM ".$this->pollTbl;
+        $pollResult = $this->getQuery($sql, $pollType);
+        if(!empty($pollResult)){
+            if($pollType == 'single'){
+                $pollData2['poll2'] = $pollResult;
+                $sql2 = "SELECT * FROM ".$this->optTbl." WHERE poll_id = ".$pollResult['id'];
+                $optionResult = $this->getQuery($sql2);
+                $pollData2['options'] = $optionResult;
+            }else{
+                $i = 0;
+                foreach($pollResult as $prow){
+                    $pollData2['poll2'] = $prow;
+                    $sql2 = "SELECT * FROM ".$this->optTbl." WHERE poll_id = ".$prow['id'];
+					echo $prow['id'];
+                    $optionResult = $this->getQuery($sql2);
+                    $pollData2['options'] = $optionResult;
+                }
+            }
+        }
+        return !empty($pollData2)?$pollData2:false;
+		
     }
     
     /*
@@ -120,8 +159,8 @@ class Poll{
         }
         return !empty($resultData)?$resultData:false;
     }
+}
 	
  
  
 		
-}

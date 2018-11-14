@@ -17,9 +17,9 @@ require('Header.php');
              <div class="container">
                <h1 align="center"><b> Charts </b> 
 			  </h1>
-	
-<form id="regForm" action="" method="POST">	
-			  <p>Which Polls Chart do you want to show?<br>
+			  
+			  <form id="regForm" action="" method="POST">
+				<p>Which Polls that you want to show?<br>
 			<select name="poll_charts">
 			<option value="0">[Choose Option Below]</option>
 			<option value="1">1</option>
@@ -28,15 +28,10 @@ require('Header.php');
 			<option value="4">4</option>
 			<option value="5">5</option>
 			</select><br>
-
-			<input type="submit" name="button" value="Submit"/>
-			</form>
+		
+						<input type="submit" name="button" value="Submit"/>		
+		</form>
 <?php
-$poll_charts = false;
-
-if(isset($_POST['poll_charts'])){
-$poll_charts = $_POST['poll_charts'];
-}
 
 include 'fusioncharts.php';
 
@@ -49,7 +44,7 @@ include 'fusioncharts.php';
 
    // Establish a connection to the database
    $dbhandle = new mysqli($hostdb, $userdb, $passdb, $namedb);
-  $dbhandle2 = new mysqli($hostdb, $userdb, $passdb, $namedb);
+
    /*Render an error message, to avoid abrupt failure, if the database connection parameters are incorrect */
    if ($dbhandle->connect_error) {
     exit("There was an error with your connection: ".$dbhandle->connect_error);
@@ -68,21 +63,40 @@ include 'fusioncharts.php';
   </head>
    <body>
     <?php
+	$poll_charts = false;
+
+if(isset($_POST['poll_charts'])){
+$poll_charts = $_POST['poll_charts'];
+}
+
+$subject = false;
+
+
       // Form the SQL query that returns the top 10 most populous countries
       $strQuery = "SELECT  poll_options.*, poll_votes.* FROM poll_options
-	  INNER JOIN poll_votes
+	  INNER JOIN poll_votes	
 	  ON poll_options.id=poll_votes.poll_option_id	
 	  WHERE poll_options.poll_id='$poll_charts'";
 
       // Execute the query, or else return the error message.
       $result = $dbhandle->query($strQuery) or exit("Error code ({$dbhandle->errno}): {$dbhandle->error}");
-
+		
+		
+			
       // If the query returns a valid response, prepare the JSON string
       if ($result) {
+		  $sql = "SELECT * FROM polls WHERE '$poll_charts'";
+				  $results = $dbhandle->query($sql) or exit("Error code ({$dbhandle->errno}): {$dbhandle->error}");
+
+			while ($row = $results->fetch_assoc()) {
+				if($row['id']==$poll_charts){
+				$subject=$row['subject'];
+				}
+			}
           // The `$arrData` array holds the chart attributes and data
           $arrData = array(
               "chart" => array(
-                  "caption" => "Whats your favorite language tutorial?",
+                  "caption" => "'$subject'",
                   "showValues" => "0",
 				  "exportEnabled" => "1",
                   "theme" => "fusion"

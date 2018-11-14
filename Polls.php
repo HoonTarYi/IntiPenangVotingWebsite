@@ -3,10 +3,11 @@ session_start();
 ?>
 
 <head>
-		<title>Elements - Spectral by HTML5 UP</title>
+		<title>INTI COLLEGE PEANANG ONLINE VOTING SYSTEM</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main1.css" />
+		<link rel="stylesheet" href="assets/css/polls.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -16,14 +17,14 @@ session_start();
 
 				<!-- Header -->
 					<header id="header">
-						<h1><a href="index.php">Spectral</a></h1>
+						<h1><a href="index(members).php">Home</a></h1>
 						<nav id="nav">
 							<ul>
 								<li class="special">
 									<a href="#menu" class="menuToggle"><span>Menu</span></a>
 									<div id="menu">
 										<ul>
-											<li><a href="index.php">Home</a></li>
+											<li><a href="index(members).php">Home</a></li>
 											<li><a href="generic.html">Generic</a></li>
 											<li><a href="elements.html">Elements</a></li>
 											<li><a href="createpolls.php">Create Polls</a></li>
@@ -66,36 +67,29 @@ session_start();
                <h1 align="center"><b> Polls </b> 
 			  </h1>
 			<form method="post" action="#">
-	<style>
-ul {
-    list-style-type: none;    
-	margin: 0;
-    padding: 0;
-}
-ul li {
-    margin-bottom:2px;
-    padding:2px;
-     
-}
-a:hover, a:active, a:focus, a:visited {
-    text-decoration: none;
-} 
-</style>
+
 <?php 
+date_default_timezone_set("Singapore");
 echo "Today is " . date("Y-m-d") . "<br>";
 echo "The time is " . date("h:i:sa");
 
 include 'dbhpolls.php';
 
-$sql = 'SELECT end FROM polls';
+$sql = 'SELECT start,end FROM polls';
 	$result = $conn->query($sql);
 	
 while ($row = $result->fetch_assoc()) {
 
 	$enddate=$row['end'];
+	$startdate=$row['start'];
 
 }
+if ($startdate > date("Y-m-d"). date("h:i:sa"))
+{
+	
+	header("Location: index.php");
 
+}
 if ($enddate < date("Y-m-d"). date("h:i:sa"))
 {
 	
@@ -109,23 +103,21 @@ else
 }
 ?>
 
-<form id="regForm" action="" method="POST">	
-			  
-		<label class="col-xs-2 control-label" for="inputWarning" name="poll_views">Which Polls do you want to show?</label>
-		<input type="text"  class="form-control" name="poll_views" placeholder="polls" value="" />
-<br>
-			<input type="submit" name="button" value="Submit"/> 
-			</form>			
 			
 <?php
+
     //include and initialize Poll class 
     include 'Poll.class.php';
     $poll = new Poll;
+	 $poll2 = new Poll;
+
 
     //get poll and options data
     $pollData = $poll->getPolls();
+	 $pollData2 = $poll2->getPolls2();
 
 ?>
+<!-- First Polls-->
 <div class="pollContent">
     <?php echo !empty($statusMsg)?'<p class="stmsg">'.$statusMsg.'</p>':''; ?>
     <form action="" method="post" name="pollFrm">
@@ -141,7 +133,25 @@ else
     <a href="results.php?pollID=<?php echo $pollData['poll']['id']; ?>">Results</a>
     </form>
 </div>
-		
+
+<!-- Latest Created Polls-->
+<div class="pollContent">
+    <?php echo !empty($statusMsg)?'<p class="stmsg">'.$statusMsg.'</p>':''; ?>
+    <form action="" method="post" name="pollForm">
+    <h3><?php echo $pollData2['poll2']['subject']; ?></h3>
+    <ul>
+	
+        <?php foreach($pollData2['options'] as $opt){
+            echo '<li><input type="radio" name="voteOpt2" value="'.$opt['id'].'" >'.$opt['name'].'</li>';
+        } ?>
+    </ul>
+    <input type="hidden" name="pollID2" value="<?php echo $pollData2['poll2']['id']; ?>">
+    <input type="submit" name="voteSubmit2" class="button" value="Vote">
+    <a href="results.php?pollID=<?php echo $pollData2['poll2']['id']; ?>">Results</a>
+    </form>
+</div>
+
+<!-- Function to save the vote From First Polls-->		
 		<?php
 				//if vote is submitted
 				if(isset($_POST['voteSubmit'])){
@@ -154,6 +164,27 @@ else
 					if($voteSubmit){
 						//store in $_COOKIE to signify the user has voted
 						setcookie($_POST['pollID'], 1, time()+60*60*24*365);
+						
+						$statusMsg = 'Your vote has been submitted successfully.';
+					}else{
+						$statusMsg = 'Your vote already had submitted.';
+					}
+				}
+				
+				?>
+<!-- Function to save the vote From Lastest Polls-->					
+				<?php
+				//if vote is submitted
+				if(isset($_POST['voteSubmit2'])){
+					$voteData2 = array(
+						'poll_id' => $_POST['pollID2'],
+						'poll_option_id' => $_POST['voteOpt2']
+					);
+					//insert vote data
+					$voteSubmit2 = $poll2->vote($voteData2);
+					if($voteSubmit2){
+						//store in $_COOKIE to signify the user has voted
+						setcookie($_POST['pollID2'], 1, time()+60*60*24*365);
 						
 						$statusMsg = 'Your vote has been submitted successfully.';
 					}else{

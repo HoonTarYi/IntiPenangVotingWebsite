@@ -1,0 +1,13 @@
+ul {
+    list-style-type: none;    
+	margin: 0;
+    padding: 0;
+}
+ul li {
+    margin-bottom:2px;
+    padding:2px;
+     
+}
+a:hover, a:active, a:focus, a:visited {
+    text-decoration: none;
+}

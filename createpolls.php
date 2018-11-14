@@ -8,7 +8,7 @@ require('Header.php');
   
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+<link rel="stylesheet" href="assets/css/createpolls.css" />
 
 		
 		
@@ -20,7 +20,7 @@ require('Header.php');
 						</header>
 						<section class="wrapper style5">
 							<div class="inner">
-							
+						<!-- Declare Vaidation If user leave the input field blank -->	
 							<h3> <?php 
 				$url = "htttp://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 				if (strpos($url, 'error=empty') !== false) {
@@ -46,61 +46,11 @@ require('Header.php');
 				
 				
 				?></h3>
-						
-       
-
            
-		   <!-- Function For Multiple Step -->
-            <script>
-                $(function ()
-                {
-                    $("#wizard").steps({
-                        headerTag: "h2",
-                        bodyTag: "section",
-                        transitionEffect: "slideLeft"
-                    });
-                });
-            </script>
 			
 			
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-<style>
-* {
-  box-sizing: border-box;
-}
 
-body {
-  background-color: #f1f1f1;
-}
-
-#regForm {
-  background-color: #b7b5b5;
-  margin: 100px auto;
-  font-family: Raleway;
-  padding: 40px;
-  width: 70%;
-  min-width: 300px;
-}
-
-h1 {
-  text-align: center;  
-}
-
-input {
-  padding: 10px;
-  width: 100%;
-  font-size: 17px;
-  font-family: Raleway;
-  border: 1px solid #aaaaaa;
-}
-
-/* Mark input boxes that gets an error on validation: */
-input.invalid {
-  background-color: #ffdddd;
-}
-
-
-</style>
 <body>
 
 					
@@ -153,13 +103,6 @@ input.invalid {
 								
 							  </div>
 </form>
-
-	    
-
-
-
-
-
 
 			</section>			
 

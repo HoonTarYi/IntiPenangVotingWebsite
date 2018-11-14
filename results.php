@@ -22,11 +22,11 @@ require('Header.php');
    
     <section id="login" class="content-section text-center">
              <div class="container">
-               <h1 align="center"><b> Login </b> 
+               <h1 align="center"><b> Result Polls </b> 
 			  </h1>
 
 
-			<link rel="stylesheet" href="result.css" />
+			<link rel="stylesheet" href="assets/css/result.css" />
 						<div class="container">
 					<?php
 				//include and initialize Poll class 

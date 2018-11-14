@@ -48,22 +48,23 @@ $url = "htttp://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 include 'dbh.php';
   
   /* Select Name with Admin roles From users table */
-	$sql = 'SELECT * FROM users WHERE roles IN ("admin")';
+	$sql = 'SELECT * FROM users WHERE roles IN ("participants")';
 	$result = mysqli_query($conn, $sql);
 	/*List all the result from the sql */
+	
 	while ($row = $result->fetch_assoc()) {
-				/* If the log in user name is not equal to the username who is admin it will run to home page 
-				To Prevent normal user can edit the registred user database. */
-				if ($row['uid'] != $_SESSION['uid'] ){
-					header("Location: index.php");
-					break;
+				/* If the log in user name is equal to the username who is participants it will run to home page 
+				To Prevent normal user can edit the registred user database.			*/
+
+				if ($row['uid'] == $_SESSION['uid'] ){
+					header("Location: index(members).php");	
+						break;
+						
+						
 				}
+
 				/* If you are adminn it will not jump to home page */
-				else {
-					print '<h3>You are in admin view.</h3>';
-					break;
-				}
-									
+						
 }
 
 	?>
@@ -73,7 +74,7 @@ include 'dbh.php';
 <div class="container">
   <div class="card mt-5">
     <div class="card-header">
-      <h2>All people</h2>
+      <h2>All Members</h2>
     </div>
     <div class="card-body">
       <table class="table table-bordered">

@@ -3,7 +3,7 @@ session_start();
 ?>
 
 <head>
-		<title>Elements - Spectral by HTML5 UP</title>
+		<title>INTI COLLEGE PENANG ONLINE VOTING SYSTEM</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -16,14 +16,14 @@ session_start();
 
 				<!-- Header -->
 					<header id="header">
-						<h1><a href="index.php">Spectral</a></h1>
+						<h1><a href="index(members).php">Home</a></h1>
 						<nav id="nav">
 							<ul>
 								<li class="special">
 									<a href="#menu" class="menuToggle"><span>Menu</span></a>
 									<div id="menu">
 										<ul>
-											<li><a href="index.php">Home</a></li>
+											<li><a href="index(members).php">Home</a></li>
 											<li><a href="generic.html">Generic</a></li>
 											<li><a href="elements.html">Elements</a></li>
 											<li><a href="createpolls.php">Create Polls</a></li>

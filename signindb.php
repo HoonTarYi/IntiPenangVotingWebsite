@@ -19,7 +19,7 @@ else {
 	$_SESSION['id'] = $row['id'];
    $_SESSION['uid'] = $row['uid'];
 	
-header("Location:index.php");
+header("Location:index(members).php");
 
 }
 
