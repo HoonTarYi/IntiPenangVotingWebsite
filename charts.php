@@ -17,20 +17,69 @@ require('Header.php');
              <div class="container">
                <h1 align="center"><b> Charts </b> 
 			  </h1>
+<!-- Restriction Normal Participants -->
+<?php 
+
+$url = "htttp://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+																				
+include 'dbh.php';
+  
+  /* Select Name with Admin roles From users table */
+	$sql = 'SELECT * FROM users WHERE roles IN ("participants")';
+	$result = mysqli_query($conn, $sql);
+	/*List all the result from the sql */
+	
+	while ($row = $result->fetch_assoc()) {
+				/* If the log in user name is equal to the username who is participants it will run to home page 
+				To Prevent normal user can edit the registred user database.			*/
+
+				if ($row['uid'] == $_SESSION['uid'] ){
+					header("Location: index(members).php");	
+						break;
+						
+						
+				}
+
+				/* If you are adminn it will not jump to home page */
+						
+}
+?>
+
+
 			  
-			  <form id="regForm" action="" method="POST">
-				<p>Which Polls that you want to show?<br>
-			<select name="poll_charts">
-			<option value="0">[Choose Option Below]</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			</select><br>
+<style>
+ th, td {
+    color:black;
+}
+</style>		 
+	
+<!-- Table For View Table and Select Charts -->
+<?php 
+  
+include 'dbhpolls.php';
+  
+  /* Read the value */
+	$sql = 'SELECT * FROM polls';
+	$result = $conn->query($sql);
+
+	
+/*Show Table */
+if ($result->num_rows > 0) {
+    echo "<form id='Form' action='' method='POST'><div class='table-wrapper'><table class='table table-bordered'><tr><th>Subject</th><th>Select</th></tr>";
+    /* output data of each row*/ 
+    while($row = $result->fetch_assoc()) {
+	
+        echo "<tr><td>" . $row["subject"]. "</td><td>". "<li><button type='submit' name='poll_charts' value=".	$row["id"]. "> Select</button></td></tr>";
+    }
+    echo "</table></div></form>";
+} else {
+	/* If No Polls , It will show this valdation*/
+    echo "0 results";
+}
+
+?>
+
 		
-						<input type="submit" name="button" value="Submit"/>		
-		</form>
 <?php
 
 include 'fusioncharts.php';
@@ -63,7 +112,10 @@ include 'fusioncharts.php';
   </head>
    <body>
     <?php
-	$poll_charts = false;
+   
+
+$poll_charts= false;
+	
 
 if(isset($_POST['poll_charts'])){
 $poll_charts = $_POST['poll_charts'];

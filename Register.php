@@ -4,9 +4,10 @@
 	
 
 <?php 
-require('Header.php');
+require('Header(Out).php');
 
 ?>
+
 
 
 
@@ -25,41 +26,37 @@ require('Header.php');
 			   <h3> <?php 
 				$url = "htttp://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 				if (strpos($url, 'error=empty') !== false) {
-					print "Fill out all fields";
+					print "<span style='color:red;'>Fill out all fields";
 					
 				}
 				
 				if (strpos($url, 'error=uid') !== false) {
-					print "Username Existed!";
+					print "<span style='color:red;'>Username Existed!";
 					
 				}
 				
 				if (strpos($url, 'error=username') !== false) {
-					print "Please enter your username"; 
+					print "<span style='color:red;'>Please enter your username"; 
 					
 				}
 				
 				if (strpos($url, 'error=pwd') !== false) {
-					print "Please enter your password"; 
+					print "<span style='color:red;'>Please enter your password"; 
 					
 				}
 				
 				 if (strpos($url, 'error=cpwd') !== false) {
-					print "Your confirmed password does not match the original password"; 
+					print "<span style='color:red;'>Your confirmed password does not match the original password"; 
 				}
 				
 				 if (strpos($url, 'error=email') !== false) {
-					print "Please enter your email address"; 
+					print "<span style='color:red;'>Please enter your email address"; 
 				}
 				
 				 if (strpos($url, 'error=addr') !== false) {
-					print "Please enter your address"; 
+					print "<span style='color:red;'>Please enter your address"; 
 				}
-				
-				
-				
-				
-				
+		
 				?></h3>
 				
 					<div class="row gtr-uniform aln-center col-3 " >
@@ -67,18 +64,10 @@ require('Header.php');
 			
 			   <br><br>
                 
-		
+
 			<!-- Form to get new user basic data-->	
 		<form class="form-horizontal" action="registerdb.php" method="POST">
-	<?php
-	/*  A Function to get ip address and  show the countr that user come from */
-include 'countryip.php';
-
-echo '<strong>IP Address</strong>:= ' .$ip. '<br/>';
-echo '<strong>Country</strong>:= ' .$country. '<br/>';
-
-
-?>
+	
 			
             <div class="col-3 col-12-xsmall ">
                 <label class="col-xs-2 control-label" for="inputSuccess" >Username</label>

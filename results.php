@@ -22,7 +22,7 @@ require('Header.php');
    
     <section id="login" class="content-section text-center">
              <div class="container">
-               <h1 align="center"><b> Result Polls </b> 
+               <h1 align="center"><b> Result Polls	 </b> 
 			  </h1>
 
 

@@ -105,7 +105,6 @@ class Poll{
                 foreach($pollResult as $prow){
                     $pollData2['poll2'] = $prow;
                     $sql2 = "SELECT * FROM ".$this->optTbl." WHERE poll_id = ".$prow['id'];
-					echo $prow['id'];
                     $optionResult = $this->getQuery($sql2);
                     $pollData2['options'] = $optionResult;
                 }

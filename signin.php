@@ -3,10 +3,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
- <?php 
-require('Header.php');
+<?php 
+require('Header(Out).php');
 
-?> 
+?>
+
 
 				<!-- Main -->
 					<article id="main">

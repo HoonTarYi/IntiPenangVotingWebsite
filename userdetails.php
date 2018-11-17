@@ -26,7 +26,7 @@ require('Header.php');
 			  </h1>
        
 <br>
-
+<!-- Connect Users Table-->
 <?php 
 
 require 'db.php';
@@ -37,10 +37,9 @@ require 'db.php';
 	$statement->execute();
 	$people = $statement->fetchAll(PDO::FETCH_OBJ);
 	
-	
-
-	
 ?>
+
+<!-- Restriction Normal Participants -->
 <?php 
 
 $url = "htttp://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];

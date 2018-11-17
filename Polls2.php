@@ -65,9 +65,7 @@ session_start();
 			  </h1>
 			<form method="post" action="#">
 
-<?php
 
-?>
 			
 			
 			
@@ -79,10 +77,10 @@ session_start();
 date_default_timezone_set("Singapore");
 echo "Today is " . date("Y-m-d") . "<br>";
 echo "The time is " . date("h:i:sa");
-
+$enddat = "Jan 5, 2019 15:37:25";
 include 'dbhpolls.php';
 
-$sql = 'SELECT start,end FROM polls WHERE ID = 1 ';
+$sql = 'SELECT start,end FROM polls';
 	$result = $conn->query($sql);
 	
 while ($row = $result->fetch_assoc()) {
@@ -107,17 +105,13 @@ if ($enddate < date("Y-m-d"). date("h:i:sa"))
 else 
 {
 		print '<p>The Polls still can be vote.</p>';
-		
 }
-
-
-
 
 ?>
 
 <h4>Start Date:</h4><?php echo $startdate; ?><br><br>
 
-<h4>CountDown:</h4><p id="demo"></p><h4>End Date:</h4><?php echo $enddate; ?><br><br><br><br>
+<h4>CountDown:</h4><p id="demo"></p><h4>End Date:</h4><?php echo $enddate; ?><br><br>
 
 <script>
 // Set the date we're counting down to
@@ -159,50 +153,48 @@ var x = setInterval(function() {
 
     //include and initialize Poll class 
     include 'Poll.class.php';
-    $poll = new Poll;
 
+	 $poll2 = new Poll;
 
 
     //get poll and options data
-    $pollData = $poll->getPolls();
 
+	 $pollData2 = $poll2->getPolls2();
 
 ?>
 
-<!-- First Polls-->
+
+<!-- Latest Created Polls-->
 <div class="pollContent">
     <?php echo !empty($statusMsg)?'<p class="stmsg">'.$statusMsg.'</p>':''; ?>
-    <form action="" method="post" name="pollFrm">
-
-
-    <h3><?php echo $pollData['poll']['subject']; ?></h3>
+    <form action="" method="post" name="pollForm">
+    <h3><?php echo $pollData2['poll2']['subject']; ?></h3>
     <ul>
 	
-        <?php foreach($pollData['options'] as $opt){
-            echo '<li><input type="radio" name="voteOpt" value="'.$opt['id'].'" >'.$opt['name'].'</li>';
+        <?php foreach($pollData2['options'] as $opt){
+            echo '<li><input type="radio" name="voteOpt2" value="'.$opt['id'].'" >'.$opt['name'].'</li>';
         } ?>
     </ul>
-    <input type="hidden" name="pollID" value="<?php echo $pollData['poll']['id']; ?>">
-    <input type="submit" name="voteSubmit" class="button" value="Vote">
-    <a href="results.php?pollID=<?php echo $pollData['poll']['id']; ?>">Results</a>
+    <input type="hidden" name="pollID2" value="<?php echo $pollData2['poll2']['id']; ?>">
+    <input type="submit" name="voteSubmit2" class="button" value="Vote">
+    <a href="results.php?pollID=<?php echo $pollData2['poll2']['id']; ?>">Results</a>
     </form>
 </div>
 
 
-
-<!-- Function to save the vote From First Polls-->		
-		<?php
+<!-- Function to save the vote From Lastest Polls-->					
+				<?php
 				//if vote is submitted
-				if(isset($_POST['voteSubmit'])){
-					$voteData = array(
-						'poll_id' => $_POST['pollID'],
-						'poll_option_id' => $_POST['voteOpt']
+				if(isset($_POST['voteSubmit2'])){
+					$voteData2 = array(
+						'poll_id' => $_POST['pollID2'],
+						'poll_option_id' => $_POST['voteOpt2']
 					);
 					//insert vote data
-					$voteSubmit = $poll->vote($voteData);
-					if($voteSubmit){
+					$voteSubmit2 = $poll2->vote($voteData2);
+					if($voteSubmit2){
 						//store in $_COOKIE to signify the user has voted
-						setcookie($_POST['pollID'], 1, time()+60*60*24*365);
+						setcookie($_POST['pollID2'], 1, time()+60*60*24*365);
 						
 						$statusMsg = 'Your vote has been submitted successfully.';
 					}else{
@@ -211,7 +203,6 @@ var x = setInterval(function() {
 				}
 				
 				?>
-
 			</section>
 				
 		<!-- Scripts -->

@@ -24,23 +24,23 @@ require('Header.php');
 							<h3> <?php 
 				$url = "htttp://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 				if (strpos($url, 'error=empty') !== false) {
-					print "Fill out all fields";
+					print "<span style='color:red;'>Fill out all fields";
 					
 				}
 				
 				if (strpos($url, 'error=subject') !== false) {
-					print "Please enter your question"; 
+					print "<span style='color:red;'>Please enter your question"; 
 					
 				}
 
 			
 				if (strpos($url, 'error=start') !== false) {
-					print "Your Start Date is not filled correctly"; 
+					print "<span style='color:red;'>Your Start Date is not filled correctly"; 
 					
 				}
 				
 				 if (strpos($url, 'error=end') !== false) {
-					print "Your End Date is not filled correctly"; 
+					print "<span style='color:red;'>Your End Date is not filled correctly"; 
 				}
 				
 				
@@ -54,7 +54,7 @@ require('Header.php');
 <body>
 
 					
-				
+	<!-- Create Polls Form -->	
 <form id="regForm" action="pollsoptdb.php" method="POST">
   <h1>Polls Setup</h1>
 
