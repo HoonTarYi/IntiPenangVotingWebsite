@@ -49,14 +49,14 @@ require('Header(Out).php');
 					<section id="two" class="wrapper alt style2">
 						<section class="spotlight">
 							<div class="image"><img src="images/pic01.jpg" alt="" /></div><div class="content">
-								<h2><a href="createpolls.php">Create Polls<br />
-								Add Options</a></h2>
+								<h2>Create Polls<br />
+								Add Options</h2>
 								<p>This Function is just can use by admin. Admin can create their own polls to let user vote the options.</p>
 							</div>
 						</section>
 						<section class="spotlight">
 							<div class="image"><img src="images/vote.jpg" alt="" /></div><div class="content">
-								<h2><a href="userdetails.php">Manage Voters</a></h2>
+								<h2>Manage Voters</h2>
 								<p>Edit,Delete & Block the voters. Admin can check their basic details of each voters. Voters who have the sam ip adress and voted twice will be blocked by the admin.</p>
 							</div>
 						</section>
